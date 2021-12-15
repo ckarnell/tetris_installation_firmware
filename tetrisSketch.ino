@@ -149,27 +149,26 @@ void drawGhost() {
 
 
 
+void printNextPiece(int position) {
+}
+
 // Print next pieces
 void printNextPieces() {
-  drawGhost();
-  clearNextPieces();
-  for (int i = 0; i < 5; i++) {
-    Tetromino* nextPiece = tetrisEngine.bag.getFuturePiece(i + 1);
+  // TODO: Reimplement this
+  /* drawGhost(); */
+  /* clearNextPieces(); */
+  /* for (int i = 0; i < 5; i++) { */
+  /*   Tetromino* nextPiece = tetrisEngine.bag.getFuturePiece(i + 1); */
 
-    for (int y = 0; y < nextPiece -> dimension; y++) {
-      for (int x = 0; x < nextPiece -> dimension; x++) {
-        if (nextPiece -> orientations[0][y][x] == 1) {
-          int adjustedX = x + MATRIX_HEIGHT - 5 - 5*i;
-          newDrawPixel(adjustedX, 1-y, colorMap[nextPiece -> symbolNum]);
-          /* int xOffset = 5; */
-          /* if (nextPiece -> symbolNum == 8) */
-          /*   xOffset = -1; */
-          /* drawSquareNew(x + 13 - 4*i, y + tetrisEngine.fieldHeight - 1, colorMap[nextPiece -> symbolNum], 1, xOffset); */
-        /* } */
-        }
-      }
-    }
-  }
+  /*   for (int y = 0; y < nextPiece -> dimension; y++) { */
+  /*     for (int x = 0; x < nextPiece -> dimension; x++) { */
+  /*       if (nextPiece -> orientations[0][y][x] == 1) { */
+  /*         int adjustedX = x + MATRIX_HEIGHT - 5 - 5*i; */
+  /*         newDrawPixel(adjustedX, 1-y, colorMap[nextPiece -> symbolNum]); */
+  /*       } */
+  /*     } */
+  /*   } */
+  /* } */
 }
 
 void printWholeBoard() {

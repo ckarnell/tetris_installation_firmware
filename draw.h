@@ -70,16 +70,16 @@ const int GHOST_ORANGE = 0x402000; // TODO: Fix, currently same as yellow
 const int MATRIX_HEIGHT = 20;
 const int MATRIX_WIDTH = 10;
 
-int adjustYCoord(int yCoord, int multiplier) {
-  // We want y = 20 to appear at 60 on the led board,
-  // but we want y = 40 to appear at 0 on the led board,
-  // a linear function.
-  // f(BUFFER_HEIGHT) = 60
-  // f(24) = 0
-  int result = (MAIN_MATRIX_HEIGHT+BUFFER_ZONE_HEIGHT+BORDER_SIZE)*multiplier; // Start with the max height
-  result -= yCoord*multiplier;
-  return result - 3;
-}
+/* int adjustYCoord(int yCoord, int multiplier) { */
+/*   // We want y = 20 to appear at 60 on the led board, */
+/*   // but we want y = 40 to appear at 0 on the led board, */
+/*   // a linear function. */
+/*   // f(BUFFER_HEIGHT) = 60 */
+/*   // f(24) = 0 */
+/*   int result = (MAIN_MATRIX_HEIGHT+BUFFER_ZONE_HEIGHT+BORDER_SIZE)*multiplier; // Start with the max height */
+/*   result -= yCoord*multiplier; */
+/*   return result - 3; */
+/* } */
 
 /* void fillRect(int yCoord, xCoord, multiplier, multiplier, color) { */
 /*   matrix.setPixel(); */
@@ -99,6 +99,100 @@ int adjustYCoord(int yCoord, int multiplier) {
 /* void clearBottom() { */
 /*   matrix.fillRect(0, 0, 2, MATRIX_HEIGHT, BLACK); */
 /* } */
+
+void newDrawPixel(int x, int y, int color) {
+  int location = (y*20)+x;
+  int secondCordOffset = 400;
+
+  if (y == 0) {
+    leds.setPixel(x, color);
+    leds.setPixel(x+1, color);
+  } 
+  return;
+
+  // First cord first line
+  int firstCordOffset = 20;
+  if (y == 1) {
+    leds.setPixel(firstCordOffset+(20-(2*x)), color);
+    leds.setPixel(firstCordOffset+(20-(2*x))+1, color);
+  }
+  return;
+
+  firstCordOffset = 100;
+  if (y == 2) {
+    leds.setPixel(firstCordOffset+x, color);
+    leds.setPixel(firstCordOffset+x+1, color);
+  }
+  return;
+
+  // First cord second line
+  firstCordOffset = firstCordOffset + 20;
+  if (y == 3) {
+    leds.setPixel(firstCordOffset+(20-(2*x)), color);
+    leds.setPixel(firstCordOffset+(20-(2*x))+1, color);
+  }
+  return;
+
+  firstCordOffset = firstCordOffset + 20;
+  if (y == 4) {
+    leds.setPixel(firstCordOffset+x, color);
+    leds.setPixel(firstCordOffset+x+1, color);
+  }
+  return;
+
+  // Second cord first line
+  if (y == 5) {
+    leds.setPixel(secondCordOffset+x, color);
+    leds.setPixel(secondCordOffset+x+1, color);
+  }
+  return;
+
+  secondCordOffset = secondCordOffset + 20;
+  if (y == 6) {
+    leds.setPixel(secondCordOffset+(20-(2*x)), color);
+    leds.setPixel(secondCordOffset+(20-(2*x))+1, color);
+  }
+  return;
+
+  secondCordOffset = secondCordOffset + 20;
+  if (y == 7) {
+    leds.setPixel(secondCordOffset+x, color);
+    leds.setPixel(secondCordOffset+x+1, color);
+  }
+  return;
+
+  // First cord third line
+  firstCordOffset = 200;
+  if (y == 8) {
+    leds.setPixel(firstCordOffset+x, color);
+    leds.setPixel(firstCordOffset+x+1, color);
+  } 
+  return;
+
+  firstCordOffset = firstCordOffset + 20;
+  if (y == 9) {
+    leds.setPixel(firstCordOffset+(20-(2*x)), color);
+    leds.setPixel(firstCordOffset+(20-(2*x))+1, color);
+  } 
+  return;
+}
+
+
+void clearNextPieces() {
+  /* matrix.fillRect(0, 9, 6, MATRIX_HEIGHT, matrix.Color333(0, 0, 0)); */
+  for (int x = 700; x < 748; x++) {
+    leds.setPixel(x, BLACK);
+  }
+}
+
+void clearHeldPiece() {
+  /* newFillRect(0, 0, 5, 3, matrix.Color333(0, 0, 0)); */
+  /* matrix.fillRect(0, 0, 6, 8, matrix.Color333(0, 0, 0)); */
+  for (int x = 40; x < 48; x++) {
+    leds.setPixel(x, BLACK);
+  }
+}
+
 
 void clearMatrix() {
   for (int x = 0; x < 10; x++) {
@@ -132,99 +226,6 @@ void translateScoreIntoScoreRep(long long score) {
 /* void newDrawLine(int startX, int startY, int endX, int endY, int color) { */
 /*     matrix.drawLine(startY, startX, endY, endX, color); */
 /* } */
-
-void newDrawPixel(int x, int y, int color) {
-  int location = (y*20)+x;
-  int firstCordOffset = 0;
-  int secondCordOffset = 400
-
-  if (y == 0) {
-    leds.setPixel(x, color);
-    leds.setPixel(x+1, color);
-  } 
-  return;
-
-  // First cord first line
-  int firstCordOffset = 20;
-  if (y == 1) {
-    leds.setPixel(firstCordOffset+(20-(2*x)), color);
-    leds.setPixel(firstCordOffset+(20-(2*x)+1, color);
-  }
-  return;
-
-  firstCordOffset = 100;
-  if (y == 2) {
-    leds.setPixel(firstCordOffset+x, color);
-    leds.setPixel(firstCordOffset+x+1, color);
-  }
-  return;
-
-  // First cord second line
-  firstCordOffset = firstCordOffset + 20;
-  if (y == 3) {
-    leds.setPixel(firstCordOffset+(20-(2*x)), color);
-    leds.setPixel(firstCordOffset+(20-(2*x)+1, color);
-  }
-  return;
-
-  firstCordOffset = firstCordOffset + 20;
-  if (y == 4) {
-    leds.setPixel(firstCordOffset+x, color);
-    leds.setPixel(firstCordOffset+x+1, color);
-  }
-  return;
-
-  // Second cord first line
-  if (y == 5) {
-    leds.setPixel(secondCordOffset+x, color);
-    leds.setPixel(secondCordOffset+x+1, color);
-  }
-  return;
-
-  secondCordOffset = secondCordOffset + 20;
-  if (y == 6) {
-    leds.setPixel(secondCordOffset+(20-(2*x)), color);
-    leds.setPixel(secondCordOffset+(20-(2*x)+1, color);
-  }
-  return;
-
-  secondCordOffset = secondCordOffset + 20;
-  if (y == 7) {
-    leds.setPixel(secondCordOffset+x, color);
-    leds.setPixel(secondCordOffset+x+1, color);
-  }
-  return;
-
-  // First cord third line
-  firstCordOffset = 200;
-  if (y == 8) {
-    leds.setPixel(firstCordOffset+x, color);
-    leds.setPixel(firstCordOffset+x+1, color);
-  } 
-  return;
-
-  firstCordOffset = firstCordOffset + 20;
-  if (y == 9) {
-    leds.setPixel(firstCordOffset+(20-(2*x)), color);
-    leds.setPixel(firstCordOffset+(20-(2*x)+1, color);
-  } 
-  return;
-}
-
-void clearNextPieces() {
-  /* matrix.fillRect(0, 9, 6, MATRIX_HEIGHT, matrix.Color333(0, 0, 0)); */
-  for (int x = 700; x < 748; x++) {
-    leds.setPixel(x, BLACK);
-  }
-}
-
-void clearHeldPiece() {
-  /* newFillRect(0, 0, 5, 3, matrix.Color333(0, 0, 0)); */
-  /* matrix.fillRect(0, 0, 6, 8, matrix.Color333(0, 0, 0)); */
-  for (int x = 40; x < 48; x++) {
-    leds.setPixel(x, BLACK);
-  }
-}
 
 
 
