@@ -100,81 +100,131 @@ const int MATRIX_WIDTH = 10;
 /*   matrix.fillRect(0, 0, 2, MATRIX_HEIGHT, BLACK); */
 /* } */
 
+void showPixels() {
+  leds.show();
+}
+
 void newDrawPixel(int x, int y, int color) {
-  int location = (y*20)+x;
-  int secondCordOffset = 400;
-
+  // First row
+  int rowOffset = 400;
   if (y == 0) {
-    leds.setPixel(x, color);
-    leds.setPixel(x+1, color);
-  } 
-  return;
+    leds.setPixel(x+rowOffset, color);
+    leds.setPixel(x+rowOffset+1, color);
+  }
 
-  // First cord first line
-  int firstCordOffset = 20;
+  rowOffset = 420;
   if (y == 1) {
-    leds.setPixel(firstCordOffset+(20-(2*x)), color);
-    leds.setPixel(firstCordOffset+(20-(2*x))+1, color);
+    leds.setPixel(rowOffset+((x*2)-20), color);
+    leds.setPixel(rowOffset+((x*2)-20)+1, color);
   }
-  return;
 
-  firstCordOffset = 100;
+  rowOffset = 500;
   if (y == 2) {
-    leds.setPixel(firstCordOffset+x, color);
-    leds.setPixel(firstCordOffset+x+1, color);
+    leds.setPixel(x+rowOffset, color);
+    leds.setPixel(x+rowOffset+1, color);
   }
-  return;
 
-  // First cord second line
-  firstCordOffset = firstCordOffset + 20;
+  rowOffset = 520;
   if (y == 3) {
-    leds.setPixel(firstCordOffset+(20-(2*x)), color);
-    leds.setPixel(firstCordOffset+(20-(2*x))+1, color);
+    leds.setPixel(rowOffset+((x*2)-20), color);
+    leds.setPixel(rowOffset+((x*2)-20)+1, color);
   }
-  return;
 
-  firstCordOffset = firstCordOffset + 20;
+  rowOffset = 540;
   if (y == 4) {
-    leds.setPixel(firstCordOffset+x, color);
-    leds.setPixel(firstCordOffset+x+1, color);
+    leds.setPixel(x+rowOffset, color);
+    leds.setPixel(x+rowOffset+1, color);
   }
-  return;
 
-  // Second cord first line
+  rowOffset = 0;
   if (y == 5) {
-    leds.setPixel(secondCordOffset+x, color);
-    leds.setPixel(secondCordOffset+x+1, color);
+    leds.setPixel(rowOffset+((x*2)-20), color);
+    leds.setPixel(rowOffset+((x*2)-20)+1, color);
   }
-  return;
 
-  secondCordOffset = secondCordOffset + 20;
+  rowOffset = 20;
   if (y == 6) {
-    leds.setPixel(secondCordOffset+(20-(2*x)), color);
-    leds.setPixel(secondCordOffset+(20-(2*x))+1, color);
+    leds.setPixel(x+rowOffset, color);
+    leds.setPixel(x+rowOffset+1, color);
   }
-  return;
 
-  secondCordOffset = secondCordOffset + 20;
+  rowOffset = 40;
   if (y == 7) {
-    leds.setPixel(secondCordOffset+x, color);
-    leds.setPixel(secondCordOffset+x+1, color);
+    leds.setPixel(rowOffset+((x*2)-20), color);
+    leds.setPixel(rowOffset+((x*2)-20)+1, color);
   }
-  return;
 
-  // First cord third line
-  firstCordOffset = 200;
+  rowOffset = 600;
   if (y == 8) {
-    leds.setPixel(firstCordOffset+x, color);
-    leds.setPixel(firstCordOffset+x+1, color);
-  } 
-  return;
+    leds.setPixel(x+rowOffset, color);
+    leds.setPixel(x+rowOffset+1, color);
+  }
 
-  firstCordOffset = firstCordOffset + 20;
+  rowOffset = 620;
   if (y == 9) {
-    leds.setPixel(firstCordOffset+(20-(2*x)), color);
-    leds.setPixel(firstCordOffset+(20-(2*x))+1, color);
-  } 
-  return;
+    leds.setPixel(rowOffset+((x*2)-20), color);
+    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+  }
+
+  rowOffset = 640;
+  if (y == 10) {
+    leds.setPixel(x+rowOffset, color);
+    leds.setPixel(x+rowOffset+1, color);
+  }
+
+  rowOffset = 100;
+  if (y == 11) {
+    leds.setPixel(rowOffset+((x*2)-20), color);
+    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+  }
+
+  rowOffset = 120;
+  if (y == 12) {
+    leds.setPixel(x+rowOffset, color);
+    leds.setPixel(x+rowOffset+1, color);
+  }
+
+  rowOffset = 140;
+  if (y == 13) {
+    leds.setPixel(rowOffset+((x*2)-20), color);
+    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+  }
+
+  rowOffset = 700;
+  if (y == 14) {
+    leds.setPixel(x+rowOffset, color);
+    leds.setPixel(x+rowOffset+1, color);
+  }
+
+  rowOffset = 720;
+  if (y == 15) {
+    leds.setPixel(rowOffset+((x*2)-20), color);
+    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+  }
+
+  rowOffset = 740;
+  if (y == 16) {
+    leds.setPixel(x+rowOffset, color);
+    leds.setPixel(x+rowOffset+1, color);
+  }
+
+  rowOffset = 200;
+  if (y == 17) {
+    leds.setPixel(rowOffset+((x*2)-20), color);
+    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+  }
+
+  rowOffset = 220;
+  if (y == 18) {
+    leds.setPixel(x+rowOffset, color);
+    leds.setPixel(x+rowOffset+1, color);
+  }
+
+  rowOffset = 240;
+  if (y == 19) {
+    leds.setPixel(rowOffset+((x*2)-20), color);
+    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+  }
 }
 
 

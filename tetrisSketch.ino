@@ -393,7 +393,7 @@ void loop() {
 
       drawGhost();
     }
-    leds.show();
+    showPixels();
 
     firstIteration = false;
   }
