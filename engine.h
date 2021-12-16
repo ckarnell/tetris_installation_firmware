@@ -15,7 +15,7 @@ const int INDICES_TO_DRAW_LENGTH = 10;
 const int MAIN_MATRIX_HEIGHT = 20;
 const int MAIN_MATRIX_WIDTH = 10;
 const int BUFFER_ZONE_HEIGHT = 5;
-const int BORDER_SIZE = 1;
+const int BORDER_SIZE = 0;
 const int CURRENT_PIECE_CHAR = 9;
 
 float getSpeedInMillisecondsByLevel(int level)
@@ -44,7 +44,7 @@ class TetrisEngine {
 
     int currentTime = millis();
     unsigned long lastDasAt = 0;
-    int dasSpeed = 10;
+    unsigned int dasSpeed = 10;
     int softDropSpeed = 10;
     unsigned long lastSoftDropAt = 0;
     int rowsToRemove[4] = {-1, -1, -1, -1};

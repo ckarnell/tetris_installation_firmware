@@ -21,7 +21,7 @@ int drawingMemory[ledsPerStrip*6];
 const int config = WS2811_GRB | WS2811_800kHz;
 
 OctoWS2811 leds(ledsPerStrip, displayMemory, drawingMemory, config);
-RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false, 64);
+//RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false, 64);
 
 /* const int CYAN   = matrix.Color333(0,4,7); // 1183 */
 /* const int VIOLET = matrix.Color333(4,0,7); // -28641 */
@@ -62,7 +62,7 @@ const int GHOST_RED = 0x200000;
 /* const int GHOST_GREEN = matrix.Color333(0, 1, 0); */
 const int GHOST_GREEN = 0x002000;
 /* const int GOST_CYAN = matrix.Color333(0, 1, 2); */
-const int GOST_CYAN = 0x002040;
+const int GHOST_CYAN = 0x002040;
 /* const int GHOST_VIOLET = matrix.Color333(1, 0, 2); */
 const int GHOST_VIOLET = 0x200040;
 /* const int GHOST_ORANGE = matrix.Color333(2, 1, 0); // TODO: Fix, currently same as yellow */
@@ -104,7 +104,14 @@ void showPixels() {
   leds.show();
 }
 
-void newDrawPixel(int x, int y, int color) {
+void newDrawPixel(int xWithoutMultiplier, int yWithBuffer, int color) {
+  int x = xWithoutMultiplier*2;
+//  Serial.print('X: ');
+  Serial.print(x);
+  Serial.print(' ');
+  int y = yWithBuffer - 4;
+//  Serial.print('Y: ');
+  Serial.println(y);
   // First row
   int rowOffset = 400;
   if (y == 0) {
@@ -114,8 +121,8 @@ void newDrawPixel(int x, int y, int color) {
 
   rowOffset = 420;
   if (y == 1) {
-    leds.setPixel(rowOffset+((x*2)-20), color);
-    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+    leds.setPixel(rowOffset+(20-x), color);
+    leds.setPixel(rowOffset+(20-x)+1, color);
   }
 
   rowOffset = 500;
@@ -126,8 +133,8 @@ void newDrawPixel(int x, int y, int color) {
 
   rowOffset = 520;
   if (y == 3) {
-    leds.setPixel(rowOffset+((x*2)-20), color);
-    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+    leds.setPixel(rowOffset+(20-x), color);
+    leds.setPixel(rowOffset+(20-x)+1, color);
   }
 
   rowOffset = 540;
@@ -138,8 +145,8 @@ void newDrawPixel(int x, int y, int color) {
 
   rowOffset = 0;
   if (y == 5) {
-    leds.setPixel(rowOffset+((x*2)-20), color);
-    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+    leds.setPixel(rowOffset+(20-x), color);
+    leds.setPixel(rowOffset+(20-x)+1, color);
   }
 
   rowOffset = 20;
@@ -150,8 +157,8 @@ void newDrawPixel(int x, int y, int color) {
 
   rowOffset = 40;
   if (y == 7) {
-    leds.setPixel(rowOffset+((x*2)-20), color);
-    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+    leds.setPixel(rowOffset+(20-x), color);
+    leds.setPixel(rowOffset+(20-x)+1, color);
   }
 
   rowOffset = 600;
@@ -162,8 +169,8 @@ void newDrawPixel(int x, int y, int color) {
 
   rowOffset = 620;
   if (y == 9) {
-    leds.setPixel(rowOffset+((x*2)-20), color);
-    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+    leds.setPixel(rowOffset+(20-x), color);
+    leds.setPixel(rowOffset+(20-x)+1, color);
   }
 
   rowOffset = 640;
@@ -174,8 +181,8 @@ void newDrawPixel(int x, int y, int color) {
 
   rowOffset = 100;
   if (y == 11) {
-    leds.setPixel(rowOffset+((x*2)-20), color);
-    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+    leds.setPixel(rowOffset+(20-x), color);
+    leds.setPixel(rowOffset+(20-x)+1, color);
   }
 
   rowOffset = 120;
@@ -186,8 +193,8 @@ void newDrawPixel(int x, int y, int color) {
 
   rowOffset = 140;
   if (y == 13) {
-    leds.setPixel(rowOffset+((x*2)-20), color);
-    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+    leds.setPixel(rowOffset+(20-x), color);
+    leds.setPixel(rowOffset+(20-x)+1, color);
   }
 
   rowOffset = 700;
@@ -198,8 +205,8 @@ void newDrawPixel(int x, int y, int color) {
 
   rowOffset = 720;
   if (y == 15) {
-    leds.setPixel(rowOffset+((x*2)-20), color);
-    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+    leds.setPixel(rowOffset+(20-x), color);
+    leds.setPixel(rowOffset+(20-x)+1, color);
   }
 
   rowOffset = 740;
@@ -210,8 +217,8 @@ void newDrawPixel(int x, int y, int color) {
 
   rowOffset = 200;
   if (y == 17) {
-    leds.setPixel(rowOffset+((x*2)-20), color);
-    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+    leds.setPixel(rowOffset+(20-x), color);
+    leds.setPixel(rowOffset+(20-x)+1, color);
   }
 
   rowOffset = 220;
@@ -222,8 +229,13 @@ void newDrawPixel(int x, int y, int color) {
 
   rowOffset = 240;
   if (y == 19) {
-    leds.setPixel(rowOffset+((x*2)-20), color);
-    leds.setPixel(rowOffset+((x*2)-20)+1, color);
+    Serial.println("HERE");
+    Serial.println(rowOffset+(20-x));
+    leds.setPixel(rowOffset+(20-x), color);
+    leds.setPixel(rowOffset+(20-x)+1, color);
+//    leds.setPixel(240, color);
+//    leds.setPixel(241, color);
+//    leds.show();
   }
 }
 

@@ -65,7 +65,6 @@ void drawGhost() {
 
   if (tetrisEngine.rowsRemovedThisIteration != 0) {
     for (int i = 0; i < 4; i++) {
-      /* drawSquareNew(ghostInds[i][0], ghostInds[i][1], BLACK, 3); */
       newDrawPixel(ghostInds[i][0], ghostInds[i][1], BLACK);
       ghostInds[i][0] = -1;
       ghostInds[i][1] = -1;
@@ -108,7 +107,6 @@ void drawGhost() {
       int minoRepresentation = tetrisEngine.currentPiece -> orientations[tetrisEngine.orientation][y][x];
       if (minoRepresentation == 1) {
         if (tetrisEngine.matrixRepresentation[(currentGhostY + y)*tetrisEngine.fieldWidth + (x + tetrisEngine.currentX)] == 0) {
-          /* drawSquareNew(x + tetrisEngine.currentX, currentGhostY + y, ghostColor, 3); */
           newDrawPixel(x + tetrisEngine.currentX, currentGhostY + y, ghostColor);
           newGhostInds[currentGhostInd][0] = x + tetrisEngine.currentX;
           newGhostInds[currentGhostInd][1] = currentGhostY + y;
@@ -131,7 +129,6 @@ void drawGhost() {
 
     if (ghostInds[i][0] != -1 && shouldDelete) {
        if (tetrisEngine.matrixRepresentation[ghostInds[i][1]*tetrisEngine.fieldWidth + ghostInds[i][0]] == 0) {
-         /* drawSquareNew(ghostInds[i][0], ghostInds[i][1], BLACK, 3); */
          newDrawPixel(ghostInds[i][0], ghostInds[i][1], BLACK);
        }
        ghostInds[i][0] = -1;
@@ -190,15 +187,16 @@ void printWholeBoard() {
       int currentColor = colorMap[currentColorInd];
       
       if (currentColor != 1) { // Don't draw borders
-        /* drawSquareNew(x, y, currentColor, 3); */
         newDrawPixel(x, y, currentColor);
       }// else {
   //        }
     }
   }
+//  leds.show(); //TODO: Needed??
 }
 
 void loop() {
+  // TODO: Reimplement controls
   /* int upValue = digitalRead(upButton); */
   /* int leftValue = digitalRead(leftButton); */
   /* int rightValue = digitalRead(rightButton); */
@@ -254,12 +252,12 @@ void loop() {
     highScore = tetrisEngine.score > highScore ? tetrisEngine.score : highScore;
     gameOverDrawn = true;
 
-    int wordHeightOffset = 6; // Height of font + 1 space + 1 to set next draw location
+//    int wordHeightOffset = 6; // Height of font + 1 space + 1 to set next draw location
     int currentY = 18;
     int lineOffset = 1;
     /* int highestY = currentY + lineOffset*4 + wordHeightOffset*5; */
 
-    newFillRect(0, currentY, MATRIX_HEIGHT, highestY - currentY, BLACK);
+//    newFillRect(0, currentY, MATRIX_HEIGHT, highestY - currentY, BLACK);
     /* newDrawLine(0, currentY - 1, MATRIX_HEIGHT - 1, currentY - 1, DIM_WHITE); */
     /* newDrawLine(0, highestY-1, MATRIX_HEIGHT - 1, highestY-1, DIM_WHITE); */
 
@@ -385,10 +383,10 @@ void loop() {
          }
 
          /* int currentColorInd = currentNum == CURRENT_PIECE_CHAR ? tetrisEngine.currentPiece -> symbolNum : currentNum; */
-         /* int currentColor = colorMap[currentColorInd]; */
-         /* int currentColorInd = currentNum == CURRENT_PIECE_CHAR ? tetrisEngine.currentPiece -> symbolNum : currentNum; */
+//         int currentColor = colorMap[currentColorInd];
+//         int currentColorInd = currentNum == CURRENT_PIECE_CHAR ? tetrisEngine.currentPiece -> symbolNum : currentNum;
          int currentColor = colorMap[currentColorInd];
-         drawSquareNew(x, y, currentColor, 3);
+           newDrawPixel(x, y, currentColor);
       }
 
       drawGhost();
