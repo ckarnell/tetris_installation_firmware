@@ -5,16 +5,26 @@
 #define seed A9
 
 /* // Buttons */
-#define upButton 23
-#define rightButton 22
-#define downButton 2
-#define leftButton 3
-#define counterClockwiseButton 4
-#define flipButton 6
-#define clockwiseButton 5
-#define holdButton 8
-#define startButton 12
-#define selectButton 13
+int upValue = 0;
+int rightValue = 0;
+int downValue = 0;
+int leftValue = 0;
+int counterClockwiseValue = 0;
+int flipValue = 0;
+int counterClockwiseButtonValue = 0;
+int clockwiseButtonValue = 0;
+int xValue = 0;
+int circleValue = 0;
+int triangleValue = 0;
+int squareValue = 0;
+int l1Value = 0;
+int l2Value = 0;
+int r1Value = 0;
+int r2Value = 0;
+int clockwiseValue = 0;
+int holdValue = 0;
+int startValue = 0;
+int selectValue = 0;
 
 TetrisEngine tetrisEngine = TetrisEngine();
 
@@ -27,16 +37,6 @@ void setup() {
   leds.begin();
   Serial.begin(9875);
   randomSeed(analogRead(seed));
-  pinMode(clockwiseButton, INPUT);
-  pinMode(counterClockwiseButton, INPUT);
-  pinMode(upButton, INPUT);
-  pinMode(leftButton, INPUT);
-  pinMode(rightButton, INPUT);
-  pinMode(downButton, INPUT);
-  pinMode(holdButton, INPUT);
-  pinMode(flipButton, INPUT);
-  pinMode(startButton, INPUT);
-  pinMode(selectButton, INPUT);
 }
 
 bool firstIteration = true;
@@ -147,25 +147,35 @@ void drawGhost() {
 
 
 void printNextPiece(int position) {
+  int pixelOffset = 300;
+  int cellOffsetMultiplier = 8*2;
+  
 }
 
 // Print next pieces
 void printNextPieces() {
   // TODO: Reimplement this
-  /* drawGhost(); */
-  /* clearNextPieces(); */
-  /* for (int i = 0; i < 5; i++) { */
-  /*   Tetromino* nextPiece = tetrisEngine.bag.getFuturePiece(i + 1); */
+  drawGhost();
+  clearNextPieces();
+  for (int i = 0; i < 6; i++) {
+    Tetromino* nextPiece = tetrisEngine.bag.getFuturePiece(i + 1);
 
-  /*   for (int y = 0; y < nextPiece -> dimension; y++) { */
-  /*     for (int x = 0; x < nextPiece -> dimension; x++) { */
-  /*       if (nextPiece -> orientations[0][y][x] == 1) { */
-  /*         int adjustedX = x + MATRIX_HEIGHT - 5 - 5*i; */
-  /*         newDrawPixel(adjustedX, 1-y, colorMap[nextPiece -> symbolNum]); */
-  /*       } */
-  /*     } */
-  /*   } */
-  /* } */
+    for (int y = 0; y < nextPiece -> dimension; y++) {
+      for (int x = 0; x < nextPiece -> dimension; x++) {
+        if (nextPiece -> orientations[0][y][x] == 1) {
+//          int adjustedX = x + MATRIX_HEIGHT - 5 - 5*i;
+//          newDrawPixel(adjustedX, 1-y, colorMap[nextPiece -> symbolNum]);
+            if (y==0) {
+              leds.setPixel(300+(i*16)+(x*2), colorMap[nextPiece -> symbolNum]);
+              leds.setPixel(300+(i*16)+(x*2)+1, colorMap[nextPiece -> symbolNum]);
+            } else {
+              leds.setPixel(300+(i*16)+8+(8-(x*2)-2), colorMap[nextPiece -> symbolNum]);
+              leds.setPixel(300+(i*16)+8+(8-(x*2)-2)+1, colorMap[nextPiece -> symbolNum]);
+            }
+        }
+      }
+    }
+  }
 }
 
 void printWholeBoard() {
@@ -205,17 +215,50 @@ void loop() {
   /* int flipValue = digitalRead(flipButton); */
   /* int startValue = digitalRead(startButton); */
   /* int selectValue = digitalRead(selectButton); */
-  int upValue = 0;
-  int leftValue = 0;
-  int rightValue = 0;
-  int downValue = 0;
-  int holdValue = 0;
-  int flipValue = 0;
-  int startValue = 0;
-  int selectValue = 0;
 
-  int clockwiseButtonValue = digitalRead(clockwiseButton); // 1 when pushed, 0 otherwise
-  int counterClockwiseButtonValue = digitalRead(counterClockwiseButton); // 1 when pushed, 0 otherwise
+  // Documented here for order
+  /* 'options': '0', */
+  /* 'd-up': '1', */
+  /* 'd-right': '2', */
+  /* 'd-down': '3', */
+  /* 'd-left': '4', */
+  /* 'x': '5', */
+  /* 'square': '6', */
+  /* 'circle': '7', */
+  /* 'triangle': '8', */
+  /* 'L1': '9', */
+  /* 'L2': '10', */
+  /* 'L3': '11', */
+  /* 'R1': '12', */
+  /* 'R2': '13', */
+  /* 'R3': '14', */
+  /* 'ps_button': '15', */
+  if (Serial.available() > 0) {
+    String data = Serial.readStringUntil('\n');
+    startValue = data[0] - '0';
+    upValue = data[1] - '0';
+    rightValue = data[2] - '0';
+    downValue = data[3] - '0';
+    leftValue = data[4] - '0';
+    xValue = data[5] - '0';
+    squareValue = data[6] - '0';
+    circleValue = data[7] - '0';
+    triangleValue = data[8] - '0';
+    l1Value = data[9] - '0';
+    l2Value = data[10] - '0';
+    r1Value = data[11] - '0';
+    r2Value = data[12] - '0';
+    selectValue = data[15] - '0';
+
+    // Derived values
+    clockwiseButtonValue = circleValue || triangleValue;
+    counterClockwiseButtonValue = xValue || squareValue; // 1 when pushed, 0 otherwise
+    holdValue = r1Value || l1Value;
+    flipValue = r2Value || l2Value;
+  }
+
+  /* int clockwiseButtonValue = digitalRead(clockwiseButton); // 1 when pushed, 0 otherwise */
+  /* int counterClockwiseButtonValue = digitalRead(counterClockwiseButton); // 1 when pushed, 0 otherwise */
 
   if (gameOver && !ghostSettingsPushed && flipValue == 1) {
     ghostSettingsPushed = true;
@@ -251,6 +294,7 @@ void loop() {
   if (gameOver && !gameOverDrawn) {
     highScore = tetrisEngine.score > highScore ? tetrisEngine.score : highScore;
     gameOverDrawn = true;
+    Serial.print(String(tetrisEngine.score));
 
 //    int wordHeightOffset = 6; // Height of font + 1 space + 1 to set next draw location
     int currentY = 18;
@@ -346,11 +390,25 @@ void loop() {
       for (int y = 0; y < heldPiece -> dimension; y++) {
         for (int x = 0; x < heldPiece -> dimension; x++) {
           if (heldPiece -> orientations[0][y][x] == 1) {
-            newDrawPixel(x+1, 1-y, colorMap[heldPiece -> symbolNum]);
+//            newDrawPixel(x+1, 1-y, colorMap[heldPiece -> symbolNum]);
             /* drawSquareNew(x, y + tetrisEngine.fieldHeight - 1, colorMap[heldPiece -> symbolNum], 2, xOffset); */
+            int HELD_START = 440;
+            if (y==0) {
+//              leds.setPixel(HELD_START+(x*2), colorMap[heldPiece -> symbolNum]);
+//              leds.setPixel(HELD_START+(x*2)+1, colorMap[heldPiece -> symbolNum]);
+              leds.setPixel(HELD_START+6-(x*2), colorMap[heldPiece -> symbolNum]);
+              leds.setPixel(HELD_START+6-(x*2)+1, colorMap[heldPiece -> symbolNum]);
+            } else {
+//              leds.setPixel(HELD_START+8+(8-(x*2)-2), colorMap[heldPiece -> symbolNum]);
+//              leds.setPixel(HELD_START+8+(8-(x*2)-2)+1, colorMap[heldPiece -> symbolNum]);
+              leds.setPixel(HELD_START+8+6-(8-(x*2)-2), colorMap[heldPiece -> symbolNum]);
+              leds.setPixel(HELD_START+8+6-(8-(x*2)-2)+1, colorMap[heldPiece -> symbolNum]);
+            }
           }
         }
       }
+
+      
 
       /* if (!tetrisEngine.pieceHeldThisGame) { */
       /*   // We had to generate a new piece since this is the first hold of the game, */

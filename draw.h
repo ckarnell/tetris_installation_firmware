@@ -106,17 +106,14 @@ void showPixels() {
 
 void newDrawPixel(int xWithoutMultiplier, int yWithBuffer, int color) {
   int x = xWithoutMultiplier*2;
-//  Serial.print('X: ');
-  Serial.print(x);
-  Serial.print(' ');
-  int y = yWithBuffer - 4;
+  int y = yWithBuffer - 4 - 1; // Try subtracting 1 here to compensate for border height in the engine
 //  Serial.print('Y: ');
-  Serial.println(y);
+//  Serial.println(y);
   // First row
   int rowOffset = 400;
   if (y == 0) {
-    leds.setPixel(x+rowOffset, color);
-    leds.setPixel(x+rowOffset+1, color);
+    leds.setPixel(x+rowOffset-2, color);
+    leds.setPixel(x+rowOffset-2+1, color);
   }
 
   rowOffset = 420;
@@ -127,8 +124,8 @@ void newDrawPixel(int xWithoutMultiplier, int yWithBuffer, int color) {
 
   rowOffset = 500;
   if (y == 2) {
-    leds.setPixel(x+rowOffset, color);
-    leds.setPixel(x+rowOffset+1, color);
+    leds.setPixel(x+rowOffset-2, color);
+    leds.setPixel(x+rowOffset-2+1, color);
   }
 
   rowOffset = 520;
@@ -139,8 +136,8 @@ void newDrawPixel(int xWithoutMultiplier, int yWithBuffer, int color) {
 
   rowOffset = 540;
   if (y == 4) {
-    leds.setPixel(x+rowOffset, color);
-    leds.setPixel(x+rowOffset+1, color);
+    leds.setPixel(x+rowOffset-2, color);
+    leds.setPixel(x+rowOffset-2+1, color);
   }
 
   rowOffset = 0;
@@ -151,8 +148,8 @@ void newDrawPixel(int xWithoutMultiplier, int yWithBuffer, int color) {
 
   rowOffset = 20;
   if (y == 6) {
-    leds.setPixel(x+rowOffset, color);
-    leds.setPixel(x+rowOffset+1, color);
+    leds.setPixel(x+rowOffset-2, color);
+    leds.setPixel(x+rowOffset-2+1, color);
   }
 
   rowOffset = 40;
@@ -163,8 +160,8 @@ void newDrawPixel(int xWithoutMultiplier, int yWithBuffer, int color) {
 
   rowOffset = 600;
   if (y == 8) {
-    leds.setPixel(x+rowOffset, color);
-    leds.setPixel(x+rowOffset+1, color);
+    leds.setPixel(x+rowOffset-2, color);
+    leds.setPixel(x+rowOffset-2+1, color);
   }
 
   rowOffset = 620;
@@ -175,8 +172,8 @@ void newDrawPixel(int xWithoutMultiplier, int yWithBuffer, int color) {
 
   rowOffset = 640;
   if (y == 10) {
-    leds.setPixel(x+rowOffset, color);
-    leds.setPixel(x+rowOffset+1, color);
+    leds.setPixel(x+rowOffset-2, color);
+    leds.setPixel(x+rowOffset-2+1, color);
   }
 
   rowOffset = 100;
@@ -187,8 +184,8 @@ void newDrawPixel(int xWithoutMultiplier, int yWithBuffer, int color) {
 
   rowOffset = 120;
   if (y == 12) {
-    leds.setPixel(x+rowOffset, color);
-    leds.setPixel(x+rowOffset+1, color);
+    leds.setPixel(x+rowOffset-2, color);
+    leds.setPixel(x+rowOffset-2+1, color);
   }
 
   rowOffset = 140;
@@ -199,8 +196,8 @@ void newDrawPixel(int xWithoutMultiplier, int yWithBuffer, int color) {
 
   rowOffset = 700;
   if (y == 14) {
-    leds.setPixel(x+rowOffset, color);
-    leds.setPixel(x+rowOffset+1, color);
+    leds.setPixel(x+rowOffset-2, color);
+    leds.setPixel(x+rowOffset-2+1, color);
   }
 
   rowOffset = 720;
@@ -211,8 +208,8 @@ void newDrawPixel(int xWithoutMultiplier, int yWithBuffer, int color) {
 
   rowOffset = 740;
   if (y == 16) {
-    leds.setPixel(x+rowOffset, color);
-    leds.setPixel(x+rowOffset+1, color);
+    leds.setPixel(x+rowOffset-2, color);
+    leds.setPixel(x+rowOffset-2+1, color);
   }
 
   rowOffset = 200;
@@ -223,14 +220,14 @@ void newDrawPixel(int xWithoutMultiplier, int yWithBuffer, int color) {
 
   rowOffset = 220;
   if (y == 18) {
-    leds.setPixel(x+rowOffset, color);
-    leds.setPixel(x+rowOffset+1, color);
+    leds.setPixel(x+rowOffset-2, color);
+    leds.setPixel(x+rowOffset-2+1, color);
   }
 
   rowOffset = 240;
   if (y == 19) {
-    Serial.println("HERE");
-    Serial.println(rowOffset+(20-x));
+//    Serial.println("HERE");
+//    Serial.println(rowOffset+(20-x));
     leds.setPixel(rowOffset+(20-x), color);
     leds.setPixel(rowOffset+(20-x)+1, color);
 //    leds.setPixel(240, color);
@@ -242,7 +239,7 @@ void newDrawPixel(int xWithoutMultiplier, int yWithBuffer, int color) {
 
 void clearNextPieces() {
   /* matrix.fillRect(0, 9, 6, MATRIX_HEIGHT, matrix.Color333(0, 0, 0)); */
-  for (int x = 700; x < 748; x++) {
+  for (int x = 300; x < 400; x++) {
     leds.setPixel(x, BLACK);
   }
 }
@@ -250,15 +247,15 @@ void clearNextPieces() {
 void clearHeldPiece() {
   /* newFillRect(0, 0, 5, 3, matrix.Color333(0, 0, 0)); */
   /* matrix.fillRect(0, 0, 6, 8, matrix.Color333(0, 0, 0)); */
-  for (int x = 40; x < 48; x++) {
+  for (int x = 440; x < 440+16; x++) { // TODO: Fix
     leds.setPixel(x, BLACK);
   }
 }
 
 
 void clearMatrix() {
-  for (int x = 0; x < 10; x++) {
-    for (int y = 0; y < 20; y++) {
+  for (int x = 0; x < 11; x++) {
+    for (int y = 0; y < 25; y++) {
       newDrawPixel(x, y, BLACK);
     }
   }

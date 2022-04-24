@@ -15,7 +15,7 @@ const int INDICES_TO_DRAW_LENGTH = 10;
 const int MAIN_MATRIX_HEIGHT = 20;
 const int MAIN_MATRIX_WIDTH = 10;
 const int BUFFER_ZONE_HEIGHT = 5;
-const int BORDER_SIZE = 0;
+const int BORDER_SIZE = 1; // This was 0 before..? This constant is a relic that should be removed
 const int CURRENT_PIECE_CHAR = 9;
 
 float getSpeedInMillisecondsByLevel(int level)
@@ -64,7 +64,8 @@ class TetrisEngine {
     bool pieceHeldThisPieceFall = false;
 
     // Score
-    long long score = 0;
+//    long long score = 0; // Not sure if this has to be long long, but it doesn't work when sending serialized score to rpi
+    long score = 0;
     int rowsCleared = 0;
     int currentLevel = 1;
     int rowsThisLevel = 0;
